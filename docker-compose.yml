@@ -1,0 +1,18 @@
+version: '3'
+services:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:4.7
+    restart: always
+    depends_on:
+      - db
+    env_file:
+      - ./secrets/db.env
+    ports:
+      - "8008:80"
+
+  db:
+    image: gcr.io/cloudsql-docker/gce-proxy:1.11
+    command: /cloud_sql_proxy -instances=${PROJECT:-planet4-gpi}:${REGION:-us-central1}:${CLOUDSQL_NAME:-planet4-gpi-production-clone}=tcp:0.0.0.0:3306 -credential_file=/config.json
+    restart: always
+    volumes:
+      - ./secrets/cloudsql-service-account.json:/config.json
