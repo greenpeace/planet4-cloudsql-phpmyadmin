@@ -12,7 +12,7 @@ services:
 
   db:
     image: gcr.io/cloudsql-docker/gce-proxy:1.11
-    command: /cloud_sql_proxy -instances=${PROJECT:-planet4-gpi}:${REGION:-us-central1}:${CLOUDSQL_NAME:-planet4-gpi-production-clone}=tcp:0.0.0.0:3306 -credential_file=/config.json
+    command: /cloud_sql_proxy -instances=${PROJECT:-planet4-gpi}:${REGION:-us-central1}:${CLOUDSQL_NAME:-planet4-gpi-production}=tcp:0.0.0.0:3306 -credential_file=/config.json
     restart: always
     volumes:
       - ./secrets/cloudsql-service-account.json:/config.json
